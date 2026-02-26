@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-In — UA901 SFO→LHR | United Airlines</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --ua-blue:    #1414DC;
+  --ua-dark:    #0A0A8A;
+  --ua-mid:     #1010B8;
+  --ua-sky:     #5B5BEF;
+  --gold:       #C9A84C;
+  --gold-lt:    #E8C97A;
+  --gold-bg:    rgba(201,168,76,0.12);
+  --off-white:  #F5F3EE;
+  --warm-white: #FDFCF9;
+  --dark:       #05051A;
+  --ink:        #1C1F2A;
+  --gray-mid:   #6B7280;
+  --gray-lt:    #9CA3AF;
+  --border:     #DDD8CC;
+  --border-lt:  #EDEAE3;
+  --green:      #1B6B2D;
+  --green-lt:   #E6F5EB;
+  --red:        #B91C1C;
+  --red-lt:     #FEF2F2;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--off-white);color:var(--ink);font-size:15px;line-height:1.55;}
+
+/* ── UTILITY BAR ── */
+.util-bar{background:var(--ua-dark);padding:6px 44px;display:flex;justify-content:flex-end;align-items:center;gap:20px;}
+.util-bar a{color:rgba(255,255,255,0.5);font-size:12px;text-decoration:none;font-weight:500;transition:color .15s}
+.util-bar a:hover{color:rgba(255,255,255,0.85)}
+.util-sep{color:rgba(255,255,255,0.15)}
+
+/* ── NAV ── */
+nav{background:var(--ua-blue);height:62px;display:flex;align-items:stretch;padding:0 44px;position:sticky;top:0;z-index:300;box-shadow:0 2px 16px rgba(0,39,77,0.35);}
+.logo-wrap{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:32px;padding-right:28px;border-right:1px solid rgba(255,255,255,0.14);flex-shrink:0;}
+.globe-svg{width:40px;height:40px;flex-shrink:0}
+.logo-wordmark{font-family:'DM Sans',sans-serif;font-size:19px;font-weight:700;color:white;letter-spacing:2.5px;line-height:1;}
+.nav-links{display:flex;align-items:stretch}
+.nav-lnk{display:flex;align-items:center;color:rgba(255,255,255,0.82);font-size:14px;font-weight:500;padding:0 17px;cursor:pointer;border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;text-decoration:none;}
+.nav-lnk:hover{color:white;background:rgba(255,255,255,0.07)}
+.nav-lnk.active{color:white;border-bottom-color:white}
+.nav-lnk.exp{color:var(--gold-lt)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.miles-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:5px 14px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;}
+.miles-pill strong{color:var(--gold-lt)}
+.nav-btn{border:1.5px solid rgba(255,255,255,0.5);background:transparent;color:white;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;}
+.nav-btn:hover{background:rgba(255,255,255,0.1)}
+.nav-btn.primary{background:white;color:var(--ua-blue);border-color:white}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{background:var(--warm-white);border-bottom:1px solid var(--border);padding:10px 44px;font-size:12.5px;color:var(--gray-mid);}
+.breadcrumb a{color:var(--ua-blue);text-decoration:none}
+.bc-sep{margin:0 7px;color:var(--border)}
+
+/* ── CHECK-IN HERO ── */
+.ci-hero{
+  background:linear-gradient(140deg,var(--dark) 0%,var(--ua-dark) 45%,var(--ua-blue) 100%);
+  padding:40px 44px 0;position:relative;overflow:hidden;
+}
+.ci-hero::before{content:'';position:absolute;top:-120px;right:-60px;width:540px;height:540px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.13) 0%,transparent 68%);pointer-events:none;}
+.ci-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:var(--off-white);clip-path:ellipse(54% 100% at 50% 100%);}
+.ci-hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+
+.ci-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(27,107,45,0.25);border:1px solid rgba(27,107,45,0.5);border-radius:20px;padding:5px 14px;color:#6EE08A;font-size:11.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.ci-title{font-family:'DM Serif Display',serif;font-size:40px;color:white;line-height:1.1;letter-spacing:-0.5px;margin-bottom:10px;}
+.ci-title em{color:var(--gold-lt);font-style:italic}
+.ci-sub{color:rgba(255,255,255,0.6);font-size:14.5px;margin-bottom:28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ci-chip{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:3px 11px;font-size:12px;color:rgba(255,255,255,0.78);}
+
+/* ── BOARDING PASS CARD ── */
+.bp-card{
+  background:white;border-radius:12px 12px 0 0;
+  box-shadow:0 -4px 32px rgba(0,0,0,0.2);overflow:hidden;
+}
+.bp-top{
+  background:linear-gradient(135deg,rgba(27,107,45,0.06),rgba(27,107,45,0.02));
+  border-bottom:1px solid rgba(27,107,45,0.18);
+  padding:13px 22px;display:flex;align-items:center;justify-content:space-between;
+}
+.bp-pnr-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-mid)}
+.bp-pnr{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);letter-spacing:4px;}
+.bp-status{display:inline-flex;align-items:center;gap:6px;background:var(--green-lt);border:1px solid rgba(27,107,45,0.3);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--green);}
+.bp-body{display:grid;grid-template-columns:1fr auto 1fr auto auto;align-items:center;padding:20px 22px;gap:0;}
+.bp-apt-blk{padding:10px 16px;border:1.5px solid var(--border);border-right:none;background:white;}
+.bp-apt-blk:first-child{border-radius:8px 0 0 8px;}
+.bp-arrow-blk{padding:10px 12px;border-top:1.5px solid var(--border);border-bottom:1.5px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;color:var(--ua-blue);font-size:18px;}
+.bp-apt-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gray-lt);margin-bottom:3px;}
+.bp-apt-code{font-family:'DM Serif Display',serif;font-size:32px;color:var(--ink);line-height:1;}
+.bp-apt-city{font-size:11.5px;color:var(--gray-mid);margin-top:2px;}
+.bp-time-blk{border:1.5px solid var(--border);border-left:none;padding:10px 16px;background:white;}
+.bp-time-blk.last{border-right:1.5px solid var(--border);border-radius:0 8px 8px 0;}
+.bp-time{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);line-height:1;}
+.bp-date-sub{font-size:11.5px;color:var(--gray-mid);margin-top:2px;}
+.bp-meta{display:flex;gap:0;margin:0 22px 20px;}
+.bp-meta-cell{flex:1;padding:12px 16px;background:#F8F6F1;border:1px solid var(--border);border-right:none;text-align:center;}
+.bp-meta-cell:first-child{border-radius:8px 0 0 8px;}
+.bp-meta-cell:last-child{border-right:1px solid var(--border);border-radius:0 8px 8px 0;}
+.bp-meta-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-lt);margin-bottom:4px;}
+.bp-meta-val{font-size:13.5px;font-weight:700;color:var(--ink);}
+.bp-meta-sub{font-size:11px;color:var(--gray-mid);margin-top:1px;}
+.bp-footer{background:#F3F1EB;border-top:1px solid var(--border);padding:11px 22px;display:flex;align-items:center;gap:16px;font-size:12.5px;}
+.bp-footer-item{display:flex;align-items:center;gap:6px;color:var(--gray-mid);}
+.bp-footer-item strong{color:var(--ink);}
+.bp-footer-item.warn{color:var(--red);font-weight:600;}
+
+/* ── PAGE BODY ── */
+.page{max-width:1100px;margin:0 auto;padding:32px 44px 90px}
+
+/* ── PROGRESS BAR ── */
+.ci-progress{display:flex;align-items:center;margin-bottom:32px;background:white;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+.ci-prog-step{flex:1;padding:14px 16px;display:flex;align-items:center;gap:10px;border-right:1px solid var(--border);cursor:pointer;transition:background .15s;position:relative;}
+.ci-prog-step:last-child{border-right:none;}
+.ci-prog-step:hover:not(.done):not(.active){background:#F8F6F1;}
+.ci-prog-step.done{background:var(--green-lt);}
+.ci-prog-step.active{background:#EDF3FB;}
+.cp-num{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gray-mid);flex-shrink:0;}
+.ci-prog-step.done .cp-num{background:var(--green);border-color:var(--green);color:white;}
+.ci-prog-step.active .cp-num{background:var(--ua-blue);border-color:var(--ua-blue);color:white;}
+.cp-label{font-size:12.5px;font-weight:600;color:var(--gray-mid);}
+.ci-prog-step.done .cp-label{color:var(--green);}
+.ci-prog-step.active .cp-label{color:var(--ua-blue);}
+.cp-sub{font-size:10.5px;color:var(--gray-lt);margin-top:1px;}
+
+/* ── UFLEX BANNER ── */
+.uflex-banner{
+  background:linear-gradient(120deg,var(--dark) 0%,var(--ua-dark) 50%,#004A8F 100%);
+  border-radius:14px;padding:30px 36px;display:flex;align-items:center;justify-content:space-between;gap:28px;
+  margin-bottom:32px;position:relative;overflow:hidden;cursor:pointer;
+  transition:transform .22s,box-shadow .22s;box-shadow:0 6px 32px rgba(0,39,77,0.25);
+}
+.uflex-banner:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(0,39,77,0.38)}
+.uflex-banner::before{content:'';position:absolute;right:-60px;top:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.18) 0%,transparent 65%);pointer-events:none;}
+.uflex-banner::after{content:'✈';position:absolute;right:240px;top:50%;transform:translateY(-50%) rotate(-18deg) scaleX(-1);font-size:110px;opacity:0.05;color:white;pointer-events:none;}
+.ub-left{display:flex;align-items:flex-start;gap:20px}
+.ub-icon{width:56px;height:56px;background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.ub-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold-lt);opacity:.7;margin-bottom:5px;}
+.ub-title{font-family:'DM Serif Display',serif;font-size:24px;color:white;margin-bottom:8px;line-height:1.15;}
+.ub-desc{font-size:13.5px;color:rgba(255,255,255,0.68);line-height:1.55;max-width:480px;margin-bottom:14px}
+.ub-pills{display:flex;gap:7px;flex-wrap:wrap}
+.ub-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:4px 12px;font-size:12px;color:rgba(255,255,255,0.82);font-weight:500;}
+.ub-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0}
+.ub-price-from{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:.3px;text-align:right}
+.ub-price-amt{font-family:'DM Serif Display',serif;font-size:38px;color:white;line-height:1;text-align:right;}
+.ub-price-pp{font-size:12px;color:rgba(255,255,255,0.5);text-align:right;margin-top:2px}
+.ub-mp-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,0.18);border:1px solid rgba(201,168,76,0.35);border-radius:20px;padding:5px 14px;font-size:11.5px;font-weight:700;color:var(--gold-lt);}
+.ub-btn{background:var(--gold);color:var(--dark);border:none;border-radius:6px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.2px;transition:all .18s;box-shadow:0 2px 12px rgba(0,0,0,0.2);white-space:nowrap;}
+.ub-btn:hover{background:var(--gold-lt);box-shadow:0 4px 20px rgba(0,0,0,0.28)}
+.ub-new{position:absolute;top:14px;right:14px;background:var(--gold);color:var(--dark);font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:4px;}
+.ub-mp-note{margin-top:10px;font-size:12px;color:rgba(255,255,255,0.5);text-align:right;line-height:1.5;}
+.ub-mp-note strong{color:var(--gold-lt);}
+
+/* ── MAIN LAYOUT ── */
+.ci-layout{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;}
+
+/* ── SECTION CARDS ── */
+.ci-section{background:var(--warm-white);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.ci-sec-hdr{background:linear-gradient(135deg,var(--ua-dark),var(--ua-blue));padding:16px 22px;display:flex;align-items:center;justify-content:space-between;}
+.ci-sec-hdr-title{font-family:'DM Serif Display',serif;font-size:18px;color:white;}
+.ci-sec-hdr-badge{font-size:11px;font-weight:700;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:white;border-radius:20px;padding:3px 11px;letter-spacing:.3px;}
+.ci-sec-hdr-badge.req{background:rgba(255,200,50,0.2);border-color:rgba(255,200,50,0.4);color:#FFD84A;}
+.ci-sec-body{padding:20px 22px;}
+
+/* ── PASSENGER ROW ── */
+.pax-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border-lt);}
+.pax-row:last-child{border-bottom:none;}
+.pax-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ua-blue),var(--ua-sky));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px;flex-shrink:0;}
+.pax-info{flex:1;}
+.pax-name{font-size:15px;font-weight:700;color:var(--ink);}
+.pax-detail{font-size:12px;color:var(--gray-mid);margin-top:2px;}
+.pax-seat{text-align:center;}
+.pax-seat-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);}
+.pax-seat-lbl{font-size:10px;color:var(--gray-lt);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.pax-action{padding:8px 16px;border:1.5px solid var(--ua-blue);border-radius:5px;color:var(--ua-blue);font-size:13px;font-weight:600;cursor:pointer;background:white;font-family:inherit;transition:all .15s;}
+.pax-action:hover{background:#EDF3FB;}
+
+/* ── SEAT MAP ── */
+.seat-map-wrap{margin-top:4px;}
+.seat-legend{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap;}
+.sl-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray-mid);}
+.sl-box{width:14px;height:14px;border-radius:3px;}
+.sl-box.avail{background:#B8D4F0;border:1px solid #7FB0DE;}
+.sl-box.taken{background:#DDD8CC;border:1px solid #C4BFB5;}
+.sl-box.yours{background:var(--ua-blue);}
+.sl-box.extra{background:#E8C97A;border:1px solid #C9A84C;}
+.sl-box.exit{background:#BBF7D0;border:1px solid #6EE08A;}
+.aircraft-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-lt);margin-bottom:10px;text-align:center;}
+.seat-grid{overflow-x:auto;}
+.seat-row{display:flex;align-items:center;gap:4px;margin-bottom:3px;}
+.row-num{width:24px;font-size:10px;color:var(--gray-lt);text-align:right;flex-shrink:0;}
+.seat{width:28px;height:28px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;cursor:pointer;transition:all .12s;border:1.5px solid transparent;}
+.seat.avail{background:#B8D4F0;color:#1658A0;border-color:#7FB0DE;}
+.seat.avail:hover{background:var(--ua-blue);color:white;border-color:var(--ua-blue);}
+.seat.taken{background:#DDD8CC;color:#9CA3AF;cursor:not-allowed;}
+.seat.yours{background:var(--ua-blue);color:white;border-color:var(--ua-mid);}
+.seat.extra{background:#E8C97A;color:#7A5C00;border-color:#C9A84C;}
+.seat.extra:hover{background:var(--gold);color:var(--dark);}
+.seat.exit{background:#BBF7D0;color:#166534;border-color:#6EE08A;}
+.seat.aisle{width:14px;background:transparent;border:none;cursor:default;}
+.exit-row-label{font-size:9px;color:var(--green);font-weight:700;margin-left:4px;}
+
+/* ── BAGGAGE ── */
+.bag-option{border:1.5px solid var(--border);border-radius:9px;padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:16px;}
+.bag-option:hover{border-color:var(--ua-sky);}
+.bag-option.selected{border-color:var(--ua-blue);background:#EDF3FB;}
+.bag-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.bag-option.selected .bag-radio{border-color:var(--ua-blue);}
+.bag-option.selected .bag-radio::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--ua-blue);display:block;}
+.bag-icon{font-size:24px;flex-shrink:0;}
+.bag-info{flex:1;}
+.bag-name{font-size:14px;font-weight:700;color:var(--ink);}
+.bag-desc{font-size:12px;color:var(--gray-mid);margin-top:2px;}
+.bag-price{text-align:right;flex-shrink:0;}
+.bag-amt{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);}
+.bag-amt.free{color:var(--green);}
+.bag-pp{font-size:11px;color:var(--gray-lt);}
+.bag-included{display:inline-flex;align-items:center;gap:4px;background:var(--green-lt);color:var(--green);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;}
+
+/* ── MEAL OPTIONS ── */
+.meal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.meal-card{border:1.5px solid var(--border);border-radius:9px;padding:14px 15px;cursor:pointer;transition:all .15s;position:relative;}
+.meal-card:hover{border-color:var(--ua-sky);}
+.meal-card.selected{border-color:var(--ua-blue);background:#EDF3FB;}
+.meal-emoji{font-size:28px;margin-bottom:8px;}
+.meal-name{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.meal-desc{font-size:11.5px;color:var(--gray-mid);line-height:1.5;}
+.meal-tag{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:700;border-radius:3px;padding:2px 7px;text-transform:uppercase;letter-spacing:.4px;}
+.meal-tag.veg{background:#E6F5EB;color:var(--green);}
+.meal-tag.halal{background:#FFF7ED;color:#C05621;}
+.meal-tag.pop{background:#EDF3FB;color:var(--ua-blue);}
+.meal-sel-check{position:absolute;bottom:10px;right:10px;width:20px;height:20px;border-radius:50%;background:var(--ua-blue);color:white;display:none;align-items:center;justify-content:center;font-size:12px;}
+.meal-card.selected .meal-sel-check{display:flex;}
+
+/* ── UPGRADES ── */
+.upgrade-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border-lt);}
+.upgrade-row:last-child{border-bottom:none;}
+.upg-icon{font-size:26px;flex-shrink:0;}
+.upg-info{flex:1;}
+.upg-name{font-size:14px;font-weight:700;color:var(--ink);}
+.upg-desc{font-size:12px;color:var(--gray-mid);margin-top:2px;}
+.upg-price{text-align:right;flex-shrink:0;min-width:80px;}
+.upg-amt{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ua-blue);}
+.upg-btn{padding:8px 16px;border:1.5px solid var(--ua-blue);border-radius:5px;color:var(--ua-blue);font-size:12.5px;font-weight:600;cursor:pointer;background:white;font-family:inherit;margin-top:6px;display:block;width:100%;text-align:center;transition:all .15s;}
+.upg-btn:hover{background:#EDF3FB;}
+.upg-btn.added{background:var(--ua-blue);color:white;border-color:var(--ua-blue);}
+
+/* ── TRAVEL DOCS ── */
+.doc-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-lt);}
+.doc-row:last-child{border-bottom:none;}
+.doc-icon{font-size:22px;flex-shrink:0;}
+.doc-info{flex:1;}
+.doc-title{font-size:13.5px;font-weight:600;color:var(--ink);}
+.doc-sub{font-size:11.5px;color:var(--gray-mid);margin-top:2px;}
+.doc-status{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.doc-status.ok{background:var(--green-lt);color:var(--green);}
+.doc-status.req{background:var(--red-lt);color:var(--red);}
+.doc-status.warn{background:#FFF7ED;color:#C05621;}
+
+/* ── SIDEBAR ── */
+.sb-card{background:var(--warm-white);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.sb-hdr{background:linear-gradient(135deg,var(--ua-dark),var(--ua-blue));color:white;padding:13px 18px;font-family:'DM Serif Display',serif;font-size:16px;}
+.sb-body{padding:16px 18px;}
+.sb-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border-lt);}
+.sb-row:last-child{border-bottom:none;}
+.sb-lbl{color:var(--gray-mid);}
+.sb-val{font-weight:600;color:var(--ink);}
+.sb-total{border-top:2px solid var(--border);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;font-weight:700;font-size:14px;}
+.sb-total-amt{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);}
+.sb-cta{width:100%;background:var(--ua-blue);color:white;border:none;border-radius:7px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;margin-top:14px;letter-spacing:.1px;}
+.sb-cta:hover{background:var(--ua-dark);}
+.sb-cta-sec{width:100%;background:white;color:var(--ua-blue);border:2px solid var(--ua-blue);border-radius:7px;padding:11px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .15s;}
+.sb-cta-sec:hover{background:#EDF3FB;}
+.sb-trust{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
+.sb-trust-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--gray-mid);}
+
+/* info banner */
+.info-banner{display:flex;align-items:flex-start;gap:12px;background:#EDF3FB;border:1.5px solid #B8D4F0;border-radius:8px;padding:13px 16px;margin-bottom:18px;}
+.info-banner.warn{background:#FFF7ED;border-color:#FBBF24;}
+.info-banner.success{background:var(--green-lt);border-color:rgba(27,107,45,0.3);}
+.ib-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.ib-body{}
+.ib-title{font-size:13.5px;font-weight:700;color:var(--ua-blue);margin-bottom:3px;}
+.info-banner.warn .ib-title{color:#92400E;}
+.info-banner.success .ib-title{color:var(--green);}
+.ib-sub{font-size:12.5px;color:var(--gray-mid);line-height:1.55;}
+
+/* ── OVERLAYS / MODALS ── */
+.overlay{position:fixed;inset:0;background:rgba(0,15,40,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--warm-white);border-radius:14px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(24px) scale(0.97);transition:transform .3s cubic-bezier(.22,.8,.34,1);box-shadow:0 28px 80px rgba(0,15,40,0.45);}
+.overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-hdr{background:linear-gradient(120deg,var(--dark),var(--ua-dark),var(--ua-blue));padding:24px 28px;display:flex;justify-content:space-between;align-items:flex-start;border-radius:14px 14px 0 0;position:sticky;top:0;z-index:10;}
+.mh-title{font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:3px;}
+.mh-sub{font-size:13px;color:rgba(255,255,255,0.6);}
+.m-close{background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.18);color:white;width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
+.m-close:hover{background:rgba(255,255,255,0.2);}
+.modal-body{padding:24px 28px;}
+.m-step{margin-bottom:22px;}
+.m-step-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.m-badge{background:var(--ua-blue);color:white;width:23px;height:23px;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.m-flight-info{background:#EDF3FB;border:1px solid #B8D4F0;border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;}
+.mfi-route{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink);}
+.mfi-detail{font-size:12.5px;color:var(--gray-mid);margin-top:3px;}
+.mfi-lbl{font-size:10.5px;color:var(--gray-lt);text-align:right;}
+.mfi-window{font-size:15px;font-weight:700;color:var(--ua-blue);text-align:right;}
+.exp-opt{border:2px solid var(--border);border-radius:9px;padding:15px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;background:var(--warm-white);}
+.exp-opt.picked{border-color:var(--ua-blue);background:#EDF3FB;}
+.eo-name{font-size:15.5px;font-weight:700;flex:1;}
+.eo-price{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);white-space:nowrap;text-align:right;}
+.eo-miles{font-size:11px;color:var(--gray-lt);white-space:nowrap;text-align:right;margin-top:2px;}
+.guest-rows{background:var(--warm-white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.g-row{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--border-lt);}
+.g-row:last-child{border-bottom:none;}
+.g-lbl{font-size:14px;font-weight:600;}
+.g-sub{font-size:11.5px;color:var(--gray-lt);margin-top:1px;}
+.stepper{display:flex;align-items:center;gap:14px;}
+.st-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:white;font-size:20px;color:var(--ua-blue);cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:300;transition:all .15s;line-height:1;}
+.st-btn:hover{border-color:var(--ua-blue);background:#EDF3FB;}
+.st-val{font-size:17px;font-weight:700;min-width:22px;text-align:center;}
+.m-summary{background:#F3F1EB;border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin:20px 0;}
+.ms-row{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:4px 0;}
+.ms-lbl{color:var(--gray-mid);}
+.ms-val{font-weight:600;}
+.ms-total{border-top:1px solid var(--border);margin-top:9px;padding-top:9px;font-size:15.5px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+.ms-total-price{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ua-blue);}
+.m-cta{width:100%;background:var(--ua-blue);color:white;border:none;border-radius:7px;padding:16px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;letter-spacing:.1px;}
+.m-cta:hover{background:var(--ua-dark);}
+.m-cta-sec{width:100%;background:var(--warm-white);color:var(--ua-blue);border:2px solid var(--ua-blue);border-radius:7px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:9px;transition:all .15s;}
+.m-cta-sec:hover{background:#EDF3FB;}
+.m-trust{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:13px;font-size:11.5px;color:var(--gray-lt);}
+.m-trust-item{display:flex;align-items:center;gap:4px;}
+
+/* Confirm modal */
+.conf-modal{background:var(--warm-white);border-radius:14px;width:100%;max-width:450px;padding:44px 38px;text-align:center;transform:scale(0.92);transition:transform .3s cubic-bezier(.22,.8,.34,1);box-shadow:0 28px 80px rgba(0,15,40,0.45);position:relative;}
+.overlay.open .conf-modal{transform:scale(1);}
+.conf-check{font-size:60px;margin-bottom:16px;}
+.conf-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ua-blue);margin-bottom:8px;}
+.conf-sub{font-size:14px;color:var(--gray-mid);line-height:1.65;margin-bottom:24px;}
+.conf-ref-box{background:#EDF3FB;border:1px solid #B8D4F0;border-radius:8px;padding:16px;margin-bottom:24px;}
+.conf-ref-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-lt);}
+.conf-ref-num{font-family:'DM Serif Display',serif;font-size:30px;color:var(--ua-blue);letter-spacing:5px;margin-top:4px;}
+.conf-close-btn{width:100%;background:var(--ua-blue);color:white;border:none;border-radius:7px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.conf-x{position:absolute;top:14px;right:14px;background:var(--border-lt);border:none;color:var(--gray-mid);width:30px;height:30px;border-radius:50%;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+/* ── FOOTER ── */
+footer{background:var(--ua-dark);color:rgba(255,255,255,0.5);padding:40px 44px 24px;margin-top:48px;}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1100px;margin:0 auto 28px;}
+.fc-h4{color:rgba(255,255,255,0.88);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:13px;}
+.footer-grid a{display:block;color:rgba(255,255,255,0.45);font-size:13px;text-decoration:none;margin-bottom:8px;transition:color .15s;}
+.footer-grid a:hover{color:white;}
+.footer-bottom{max-width:1100px;margin:0 auto;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.3);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ci-section{animation:fadeUp .3s ease both;}
+.ci-section:nth-child(2){animation-delay:.06s;}
+.ci-section:nth-child(3){animation-delay:.12s;}
+.ci-section:nth-child(4){animation-delay:.18s;}
+.ci-section:nth-child(5){animation-delay:.24s;}
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="util-bar">
+  <a href="#">español</a><span class="util-sep">|</span>
+  <a href="#">United Club℠</a><span class="util-sep">|</span>
+  <a href="#">MileagePlus® credit cards</a><span class="util-sep">|</span>
+  <a href="#">Help Center</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-wrap">
+    <svg class="globe-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="3" fill="#1414DC"/>
+      <defs><clipPath id="gc"><circle cx="20" cy="20" r="15"/></clipPath></defs>
+      <circle cx="20" cy="20" r="15" fill="#2828E8"/>
+      <g clip-path="url(#gc)" stroke="white" stroke-width="1.2" fill="none" opacity="0.92">
+        <line x1="5" y1="12" x2="35" y2="12"/><line x1="5" y1="16" x2="35" y2="16"/>
+        <line x1="5" y1="20" x2="35" y2="20"/><line x1="5" y1="24" x2="35" y2="24"/>
+        <line x1="5" y1="28" x2="35" y2="28"/><line x1="12" y1="5" x2="12" y2="35"/>
+        <line x1="16" y1="5" x2="16" y2="35"/><line x1="20" y1="5" x2="20" y2="35"/>
+        <line x1="24" y1="5" x2="24" y2="35"/><line x1="28" y1="5" x2="28" y2="35"/>
+      </g>
+      <circle cx="20" cy="20" r="15" stroke="white" stroke-width="1.3" fill="none" opacity="0.85"/>
+    </svg>
+    <span class="logo-wordmark">UNITED</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-lnk" href="#">Book</a>
+    <a class="nav-lnk active" href="#">My Trips</a>
+    <a class="nav-lnk" href="#">Travel Info</a>
+    <a class="nav-lnk" href="#">MileagePlus®</a>
+    <a class="nav-lnk" href="#">Deals</a>
+    <a class="nav-lnk exp" href="#">Experiences ✦</a>
+  </div>
+  <div class="nav-right">
+    <div class="miles-pill">✦ <strong>84,200</strong>&nbsp;miles</div>
+    <button class="nav-btn">J. Smith</button>
+    <button class="nav-btn primary">My Account</button>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">United.com</a><span class="bc-sep">›</span>
+  <a href="#">My Trips</a><span class="bc-sep">›</span>
+  <a href="#">UA901 · SFO → LHR</a><span class="bc-sep">›</span>
+  Check-In
+</div>
+
+<!-- CHECK-IN HERO -->
+<div class="ci-hero">
+  <div class="ci-hero-inner">
+    <div class="ci-eyebrow">✅ Check-In Open</div>
+    <h1 class="ci-title">Online Check-In<br><em>UA901 · San Francisco → London</em></h1>
+    <div class="ci-sub">
+      Checking in for Mar 14, 2026 · PNR: <strong style="color:white;letter-spacing:2px;">A1MV7S</strong>
+      <span class="ci-chip">Window closes 1h before departure</span>
+      <span class="ci-chip">Seat 28A assigned</span>
+      <span class="ci-chip">Nonstop · 11h 45m</span>
+    </div>
+
+    <!-- Boarding pass card -->
+    <div class="bp-card">
+      <div class="bp-top">
+        <div>
+          <div class="bp-pnr-lbl">Booking Reference (PNR)</div>
+          <div class="bp-pnr">A1MV7S</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="text-align:right;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-lt);">Check-in Date</div>
+            <div style="font-size:15px;font-weight:700;color:var(--ink);">Thu, March 12, 2026</div>
+          </div>
+          <div class="bp-status">✅ Check-In Open</div>
+        </div>
+      </div>
+      <div class="bp-body">
+        <div class="bp-apt-blk">
+          <div class="bp-apt-lbl">From</div>
+          <div class="bp-apt-code">SFO</div>
+          <div class="bp-apt-city">San Francisco Intl.</div>
+        </div>
+        <div class="bp-arrow-blk">✈</div>
+        <div class="bp-apt-blk" style="border-radius:0;border-left:none;">
+          <div class="bp-apt-lbl">To</div>
+          <div class="bp-apt-code">LHR</div>
+          <div class="bp-apt-city">London Heathrow</div>
+        </div>
+        <div class="bp-time-blk" style="border-left:none;">
+          <div class="bp-apt-lbl">Departs</div>
+          <div class="bp-time">10:45 AM</div>
+          <div class="bp-date-sub">Sat, Mar 14 · Terminal I</div>
+        </div>
+        <div class="bp-time-blk last" style="border-left:none;">
+          <div class="bp-apt-lbl">Arrives</div>
+          <div class="bp-time">7:30 AM</div>
+          <div class="bp-date-sub">Sun, Mar 15 · Terminal 2</div>
+        </div>
+      </div>
+      <div class="bp-meta">
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Flight</div><div class="bp-meta-val">UA901</div><div class="bp-meta-sub">Nonstop</div></div>
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Aircraft</div><div class="bp-meta-val">B787-9</div><div class="bp-meta-sub">Dreamliner</div></div>
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Passenger</div><div class="bp-meta-val">J. Smith</div><div class="bp-meta-sub">1 Adult</div></div>
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Cabin</div><div class="bp-meta-val">Economy</div><div class="bp-meta-sub">Main Cabin</div></div>
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Seat</div><div class="bp-meta-val" style="color:var(--ua-blue);">28A</div><div class="bp-meta-sub">Window</div></div>
+        <div class="bp-meta-cell"><div class="bp-meta-lbl">Boarding Group</div><div class="bp-meta-val">Group 4</div><div class="bp-meta-sub">Zone Economy</div></div>
+      </div>
+      <div class="bp-footer">
+        <div class="bp-footer-item"><span>🕐</span> Boarding: <strong>10:15 AM</strong></div>
+        <div class="bp-footer-item"><span>🚪</span> Gate: <strong>A22 (TBC)</strong></div>
+        <div class="bp-footer-item"><span>⚖️</span> Bags: <strong>1 checked included</strong></div>
+        <div class="bp-footer-item warn"><span>⚠️</span> <strong>Passport required</strong> — international flight</div>
+        <div style="margin-left:auto;font-size:12px;color:var(--gray-lt);">Check-in closes 60 min before departure</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page">
+
+  <!-- Progress steps -->
+  <div class="ci-progress">
+    <div class="ci-prog-step done">
+      <div class="cp-num">✓</div>
+      <div><div class="cp-label">Verify Details</div><div class="cp-sub">Confirmed</div></div>
+    </div>
+    <div class="ci-prog-step active">
+      <div class="cp-num">2</div>
+      <div><div class="cp-label">Seats & Extras</div><div class="cp-sub">In progress</div></div>
+    </div>
+    <div class="ci-prog-step">
+      <div class="cp-num">3</div>
+      <div><div class="cp-label">Baggage</div><div class="cp-sub">Optional</div></div>
+    </div>
+    <div class="ci-prog-step">
+      <div class="cp-num">4</div>
+      <div><div class="cp-label">Meal Preference</div><div class="cp-sub">Optional</div></div>
+    </div>
+    <div class="ci-prog-step">
+      <div class="cp-num">5</div>
+      <div><div class="cp-label">Travel Docs</div><div class="cp-sub">Required</div></div>
+    </div>
+    <div class="ci-prog-step">
+      <div class="cp-num">6</div>
+      <div><div class="cp-label">Boarding Pass</div><div class="cp-sub">Last step</div></div>
+    </div>
+  </div>
+
+  <!-- UFlex Banner -->
+  <div class="uflex-banner" onclick="openOverlay('ov-uflex')">
+    <div class="ub-left">
+      <div class="ub-icon">🛫</div>
+      <div>
+        <div class="ub-eyebrow">✦ New · Exclusive to MileagePlus® Members</div>
+        <div class="ub-title">Behind the Wings — Guided Cockpit Tour</div>
+        <div class="ub-desc">A world first. A guided cockpit walkthrough for just 4–6 guests per flight — available only to MileagePlus® members. See the flight deck, crew rest area, galley, and collect exclusive United goodies. This is a once-in-a-lifetime experience only United offers.</div>
+        <div class="ub-pills">
+          <span class="ub-pill">🛫 Guided cockpit walkthrough</span>
+          <span class="ub-pill">🛏 Crew rest area</span>
+          <span class="ub-pill">🍽 Galley tour</span>
+          <span class="ub-pill">🎁 United goodies</span>
+          <span class="ub-pill">👥 Max 4–6 guests</span>
+          <span class="ub-pill">⏱ 12–15 mins</span>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;">
+            Not a MileagePlus® member yet?
+            <a href="#" style="color:var(--gold-lt);font-weight:700;text-decoration:none;" onclick="event.stopPropagation()">Join free today →</a>
+            and be among the first to witness Behind the Wings.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ub-right">
+      <div class="ub-mp-tag">✦ MileagePlus® Exclusive</div>
+      <div>
+        <div class="ub-price-from">Add from</div>
+        <div class="ub-price-amt">$35</div>
+        <div class="ub-price-pp">per person · or 3,500 miles</div>
+      </div>
+      <button class="ub-btn" onclick="event.stopPropagation();openOverlay('ov-uflex')">Book UFlex Experience →</button>
+      <div class="ub-mp-note"><strong>Only 2 spots remaining</strong><br>on this flight · UA901 Mar 14</div>
+    </div>
+    <div class="ub-new">NEW</div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="ci-layout">
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- 1. PASSENGER -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">👤 Passenger Details</div>
+          <div class="ci-sec-hdr-badge">✓ Verified</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="pax-row">
+            <div class="pax-avatar">JS</div>
+            <div class="pax-info">
+              <div class="pax-name">SMITH / JAMES MR</div>
+              <div class="pax-detail">MileagePlus® #MP-7741982 · Gold Status · Passport verified</div>
+            </div>
+            <div class="pax-seat">
+              <div class="pax-seat-num">28A</div>
+              <div class="pax-seat-lbl">Window</div>
+            </div>
+            <button class="pax-action" onclick="openOverlay('ov-seat')">Change Seat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. SEAT SELECTION -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">💺 Seat Selection</div>
+          <div class="ci-sec-hdr-badge">Seat 28A assigned</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="info-banner">
+            <div class="ib-icon">ℹ️</div>
+            <div class="ib-body">
+              <div class="ib-title">Your current seat: 28A (Window · Economy)</div>
+              <div class="ib-sub">You can upgrade to Economy Plus (rows 8–20) for extra legroom, or select any available seat below at no charge.</div>
+            </div>
+          </div>
+          <div class="seat-legend">
+            <div class="sl-item"><div class="sl-box yours"></div> Your seat (28A)</div>
+            <div class="sl-item"><div class="sl-box avail"></div> Available</div>
+            <div class="sl-item"><div class="sl-box extra"></div> Economy Plus (+$59)</div>
+            <div class="sl-item"><div class="sl-box exit"></div> Exit row (+$39)</div>
+            <div class="sl-item"><div class="sl-box taken"></div> Taken</div>
+          </div>
+          <div class="aircraft-label">Boeing 787-9 · Economy Cabin (Rows 16–40) — Partial View</div>
+          <div class="seat-grid">
+            <!-- Row headers -->
+            <div class="seat-row"><div class="row-num"></div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">A</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">B</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">C</div><div class="aisle"></div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">D</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">E</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">F</div><div class="aisle"></div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">G</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">H</div><div style="width:28px;text-align:center;font-size:9px;color:var(--gray-lt);font-weight:700;">J</div></div>
+            <!-- Economy Plus rows -->
+            <div class="seat-row"><div class="row-num">16</div><div class="seat extra">A</div><div class="seat extra">B</div><div class="seat taken">C</div><div class="aisle"></div><div class="seat taken">D</div><div class="seat extra">E</div><div class="seat extra">F</div><div class="aisle"></div><div class="seat extra">G</div><div class="seat taken">H</div><div class="seat extra">J</div></div>
+            <div class="seat-row"><div class="row-num">17</div><div class="seat taken">A</div><div class="seat extra">B</div><div class="seat extra">C</div><div class="aisle"></div><div class="seat extra">D</div><div class="seat taken">E</div><div class="seat extra">F</div><div class="aisle"></div><div class="seat taken">G</div><div class="seat extra">H</div><div class="seat extra">J</div></div>
+            <!-- Exit row -->
+            <div class="seat-row"><div class="row-num">20</div><div class="seat exit">A</div><div class="seat exit">B</div><div class="seat taken">C</div><div class="aisle"></div><div class="seat exit">D</div><div class="seat exit">E</div><div class="seat taken">F</div><div class="aisle"></div><div class="seat exit">G</div><div class="seat exit">H</div><div class="seat exit">J</div><div class="exit-row-label">EXIT</div></div>
+            <!-- Regular rows -->
+            <div class="seat-row"><div class="row-num">24</div><div class="seat avail">A</div><div class="seat taken">B</div><div class="seat avail">C</div><div class="aisle"></div><div class="seat avail">D</div><div class="seat taken">E</div><div class="seat avail">F</div><div class="aisle"></div><div class="seat taken">G</div><div class="seat avail">H</div><div class="seat avail">J</div></div>
+            <div class="seat-row"><div class="row-num">25</div><div class="seat taken">A</div><div class="seat avail">B</div><div class="seat taken">C</div><div class="aisle"></div><div class="seat avail">D</div><div class="seat avail">E</div><div class="seat taken">F</div><div class="aisle"></div><div class="seat avail">G</div><div class="seat taken">H</div><div class="seat avail">J</div></div>
+            <div class="seat-row"><div class="row-num">27</div><div class="seat avail">A</div><div class="seat avail">B</div><div class="seat taken">C</div><div class="aisle"></div><div class="seat taken">D</div><div class="seat avail">E</div><div class="seat avail">F</div><div class="aisle"></div><div class="seat avail">G</div><div class="seat avail">H</div><div class="seat taken">J</div></div>
+            <div class="seat-row"><div class="row-num">28</div><div class="seat yours">A</div><div class="seat taken">B</div><div class="seat taken">C</div><div class="aisle"></div><div class="seat avail">D</div><div class="seat taken">E</div><div class="seat avail">F</div><div class="aisle"></div><div class="seat taken">G</div><div class="seat avail">H</div><div class="seat avail">J</div></div>
+            <div class="seat-row"><div class="row-num">29</div><div class="seat avail">A</div><div class="seat avail">B</div><div class="seat avail">C</div><div class="aisle"></div><div class="seat taken">D</div><div class="seat avail">E</div><div class="seat taken">F</div><div class="aisle"></div><div class="seat avail">G</div><div class="seat taken">H</div><div class="seat avail">J</div></div>
+            <div class="seat-row"><div class="row-num">32</div><div class="seat avail">A</div><div class="seat taken">B</div><div class="seat avail">C</div><div class="aisle"></div><div class="seat avail">D</div><div class="seat avail">E</div><div class="seat taken">F</div><div class="aisle"></div><div class="seat taken">G</div><div class="seat avail">H</div><div class="seat avail">J</div></div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px;">
+            <button style="flex:1;padding:10px;border:1.5px solid var(--ua-blue);border-radius:6px;color:var(--ua-blue);font-size:13px;font-weight:600;cursor:pointer;background:white;font-family:inherit;" onclick="openOverlay('ov-seat')">View Full Seat Map</button>
+            <button style="flex:1;padding:10px;border:none;border-radius:6px;color:white;font-size:13px;font-weight:600;cursor:pointer;background:var(--ua-blue);font-family:inherit;">Upgrade to Economy Plus · $59</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. BAGGAGE -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">🧳 Add Baggage</div>
+          <div class="ci-sec-hdr-badge req">1 bag included</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="info-banner success">
+            <div class="ib-icon">✅</div>
+            <div class="ib-body">
+              <div class="ib-title">1 checked bag already included in your fare</div>
+              <div class="ib-sub">Max 23kg (50lbs) · Dimensions: 62 linear inches. Add extra bags if needed below.</div>
+            </div>
+          </div>
+          <div class="bag-option selected" onclick="selBag(this)">
+            <div class="bag-radio"></div>
+            <div class="bag-icon">🎒</div>
+            <div class="bag-info">
+              <div class="bag-name">1st Checked Bag <span class="bag-included">✓ Included</span></div>
+              <div class="bag-desc">Up to 23kg · Already part of your Economy fare · Drop at SFO check-in counter</div>
+            </div>
+            <div class="bag-price"><div class="bag-amt free">Free</div></div>
+          </div>
+          <div class="bag-option" onclick="selBag(this)">
+            <div class="bag-radio"></div>
+            <div class="bag-icon">🧳</div>
+            <div class="bag-info">
+              <div class="bag-name">2nd Checked Bag</div>
+              <div class="bag-desc">Up to 23kg · Pre-pay and save vs. airport price of $75</div>
+            </div>
+            <div class="bag-price"><div class="bag-amt">$60</div><div class="bag-pp">pre-pay online</div></div>
+          </div>
+          <div class="bag-option" onclick="selBag(this)">
+            <div class="bag-radio"></div>
+            <div class="bag-icon">📦</div>
+            <div class="bag-info">
+              <div class="bag-name">Oversized / Overweight Bag</div>
+              <div class="bag-desc">23–32kg or over 62 linear inches · Sports equipment eligible</div>
+            </div>
+            <div class="bag-price"><div class="bag-amt">$100</div><div class="bag-pp">per bag</div></div>
+          </div>
+          <div class="bag-option" onclick="selBag(this)">
+            <div class="bag-radio"></div>
+            <div class="bag-icon">🚲</div>
+            <div class="bag-info">
+              <div class="bag-name">Special Items (Golf, Ski, Bike)</div>
+              <div class="bag-desc">Must be pre-declared · Bike box required for cycles · Pre-pay recommended</div>
+            </div>
+            <div class="bag-price"><div class="bag-amt">$150</div><div class="bag-pp">per item</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. MEAL -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">🍽 Meal Preference</div>
+          <div class="ci-sec-hdr-badge">2 meals served</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="info-banner">
+            <div class="ib-icon">ℹ️</div>
+            <div class="ib-body">
+              <div class="ib-title">Meal service included · UA901 SFO–LHR</div>
+              <div class="ib-sub">Two meals are served on this flight (dinner + breakfast). Select your preference below. Special meals must be requested at least 24 hours before departure.</div>
+            </div>
+          </div>
+          <div class="meal-grid">
+            <div class="meal-card selected" onclick="selMeal(this)">
+              <div class="meal-emoji">🥩</div>
+              <div class="meal-name">Braised Short Rib</div>
+              <div class="meal-desc">Red wine braised beef with roasted potatoes and seasonal vegetables</div>
+              <div class="meal-tag pop">Most Popular</div>
+              <div class="meal-sel-check">✓</div>
+            </div>
+            <div class="meal-card" onclick="selMeal(this)">
+              <div class="meal-emoji">🐟</div>
+              <div class="meal-name">Grilled Atlantic Salmon</div>
+              <div class="meal-desc">Pan-seared salmon with lemon herb sauce and wild rice pilaf</div>
+              <div class="meal-sel-check">✓</div>
+            </div>
+            <div class="meal-card" onclick="selMeal(this)">
+              <div class="meal-emoji">🥗</div>
+              <div class="meal-name">Vegetarian Pasta</div>
+              <div class="meal-desc">Penne with roasted tomato sauce, fresh basil and parmesan</div>
+              <div class="meal-tag veg">Vegetarian</div>
+              <div class="meal-sel-check">✓</div>
+            </div>
+            <div class="meal-card" onclick="selMeal(this)">
+              <div class="meal-emoji">🍛</div>
+              <div class="meal-name">Halal Chicken Biryani</div>
+              <div class="meal-desc">Fragrant basmati rice with spiced chicken, raita and naan</div>
+              <div class="meal-tag halal">Halal</div>
+              <div class="meal-sel-check">✓</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;font-size:12.5px;color:var(--gray-mid);">
+            Need a special meal? <a href="#" style="color:var(--ua-blue);font-weight:600;">Request gluten-free, kosher, vegan, or child meal →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. UPGRADES & EXTRAS -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">⭐ Upgrades & Extras</div>
+          <div class="ci-sec-hdr-badge">Optional</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="upgrade-row">
+            <div class="upg-icon">🛋️</div>
+            <div class="upg-info">
+              <div class="upg-name">Economy Plus Upgrade</div>
+              <div class="upg-desc">3–4 inches extra legroom · Priority boarding · Rows 8–20 · Available seats: 12A, 17C, 20D</div>
+            </div>
+            <div class="upg-price">
+              <div class="upg-amt">$59</div>
+              <button class="upg-btn" onclick="toggleUpgrade(this)">+ Add</button>
+            </div>
+          </div>
+          <div class="upgrade-row">
+            <div class="upg-icon">🌐</div>
+            <div class="upg-info">
+              <div class="upg-name">Inflight Wi-Fi</div>
+              <div class="upg-desc">High-speed satellite Wi-Fi · Stream, browse, video call · Full flight pass</div>
+            </div>
+            <div class="upg-price">
+              <div class="upg-amt">$29</div>
+              <button class="upg-btn" onclick="toggleUpgrade(this)">+ Add</button>
+            </div>
+          </div>
+          <div class="upgrade-row">
+            <div class="upg-icon">🏨</div>
+            <div class="upg-info">
+              <div class="upg-name">United Club℠ Day Pass</div>
+              <div class="upg-desc">Access SFO United Club lounge · Complimentary food, drinks, showers · Terminal I, Level 3</div>
+            </div>
+            <div class="upg-price">
+              <div class="upg-amt">$59</div>
+              <button class="upg-btn" onclick="toggleUpgrade(this)">+ Add</button>
+            </div>
+          </div>
+          <div class="upgrade-row">
+            <div class="upg-icon">🔋</div>
+            <div class="upg-info">
+              <div class="upg-name">Priority Baggage Handling</div>
+              <div class="upg-desc">Your bag comes off the carousel first · Priority tag attached at check-in</div>
+            </div>
+            <div class="upg-price">
+              <div class="upg-amt">$19</div>
+              <button class="upg-btn" onclick="toggleUpgrade(this)">+ Add</button>
+            </div>
+          </div>
+          <div class="upgrade-row">
+            <div class="upg-icon">⬆️</div>
+            <div class="upg-info">
+              <div class="upg-name">Bid for Upgrade — Polaris Business</div>
+              <div class="upg-desc">Submit a miles or cash bid for a business class upgrade. Results confirmed 48h before flight.</div>
+            </div>
+            <div class="upg-price">
+              <div class="upg-amt" style="font-size:15px;">From $450</div>
+              <button class="upg-btn" onclick="toggleUpgrade(this)">Place Bid</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. TRAVEL DOCS -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">📄 Travel Documents</div>
+          <div class="ci-sec-hdr-badge req">Action required</div>
+        </div>
+        <div class="ci-sec-body">
+          <div class="info-banner warn">
+            <div class="ib-icon">⚠️</div>
+            <div class="ib-body">
+              <div class="ib-title">Passport details required for international travel</div>
+              <div class="ib-sub">UK entry requires a valid passport. Please verify your passport details below before completing check-in. Your ESTA / eTA status will be verified automatically.</div>
+            </div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon">🛂</div>
+            <div class="doc-info">
+              <div class="doc-title">US Passport</div>
+              <div class="doc-sub">Number: ***4821 · Expires: Aug 2029 · Verified on file</div>
+            </div>
+            <div class="doc-status ok">✓ Verified</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon">🇬🇧</div>
+            <div class="doc-info">
+              <div class="doc-title">UK Entry — No Visa Required</div>
+              <div class="doc-sub">US citizens can enter UK without visa for up to 6 months · Electronic Travel Authorisation (ETA) required from Jan 2025</div>
+            </div>
+            <div class="doc-status warn">⚡ ETA Required</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon">💉</div>
+            <div class="doc-info">
+              <div class="doc-title">Health Requirements</div>
+              <div class="doc-sub">No vaccination certificate required for UK entry from the US at this time</div>
+            </div>
+            <div class="doc-status ok">✓ No Action</div>
+          </div>
+          <div class="doc-row">
+            <div class="doc-icon">🌐</div>
+            <div class="doc-info">
+              <div class="doc-title">UK Electronic Travel Authorisation (ETA)</div>
+              <div class="doc-sub">Required for US citizens traveling to UK. Apply via the UK ETA app or GOV.UK — takes ~3 days to process.</div>
+            </div>
+            <div class="doc-status req">Apply Now</div>
+          </div>
+          <button style="margin-top:14px;width:100%;padding:12px;background:var(--ua-blue);color:white;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">Upload / Verify Documents →</button>
+        </div>
+      </div>
+
+      <!-- 7. HAZMAT -->
+      <div class="ci-section">
+        <div class="ci-sec-hdr">
+          <div class="ci-sec-hdr-title">⚠️ Hazardous Materials Declaration</div>
+          <div class="ci-sec-hdr-badge req">Required</div>
+        </div>
+        <div class="ci-sec-body">
+          <div style="font-size:13.5px;color:var(--gray-mid);margin-bottom:16px;line-height:1.65;">Federal law forbids the carriage of hazardous materials aboard aircraft in your luggage or on your person. Please confirm you are not carrying any prohibited items.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--gray-mid);"><input type="checkbox" style="margin-top:3px;accent-color:var(--ua-blue)"> I am not carrying explosives, flammable liquids, or gases</label>
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--gray-mid);"><input type="checkbox" style="margin-top:3px;accent-color:var(--ua-blue)"> No lithium batteries over 160Wh (spare)</label>
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--gray-mid);"><input type="checkbox" style="margin-top:3px;accent-color:var(--ua-blue)"> No radioactive, corrosive, or toxic materials</label>
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:var(--gray-mid);"><input type="checkbox" style="margin-top:3px;accent-color:var(--ua-blue)"> No firearms or ammunition in carry-on</label>
+          </div>
+          <div style="font-size:12px;color:var(--gray-lt);">Violation is subject to a civil penalty of up to $77,114 per violation and criminal prosecution resulting in a fine and/or imprisonment. <a href="#" style="color:var(--ua-blue);">Learn more about prohibited items →</a></div>
+        </div>
+      </div>
+
+    </div><!-- /LEFT -->
+
+    <!-- RIGHT SIDEBAR -->
+    <div>
+
+      <!-- Trip summary -->
+      <div class="sb-card">
+        <div class="sb-hdr">Your Check-In Summary</div>
+        <div class="sb-body">
+          <div style="background:#EDF3FB;border:1px solid #B8D4F0;border-radius:7px;padding:12px 14px;margin-bottom:14px;">
+            <div style="font-size:11px;color:var(--gray-lt);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Flight</div>
+            <div style="font-size:16px;font-weight:700;color:var(--ink);">UA901 · SFO → LHR</div>
+            <div style="font-size:12px;color:var(--gray-mid);margin-top:2px;">Mar 14, 2026 · Departs 10:45 AM</div>
+          </div>
+          <div class="sb-row"><span class="sb-lbl">PNR</span><span class="sb-val" style="letter-spacing:2px;color:var(--ua-blue);">A1MV7S</span></div>
+          <div class="sb-row"><span class="sb-lbl">Passenger</span><span class="sb-val">J. Smith</span></div>
+          <div class="sb-row"><span class="sb-lbl">Seat</span><span class="sb-val">28A (Window)</span></div>
+          <div class="sb-row"><span class="sb-lbl">Cabin</span><span class="sb-val">Economy</span></div>
+          <div class="sb-row"><span class="sb-lbl">Boarding Group</span><span class="sb-val">Group 4</span></div>
+          <div class="sb-row"><span class="sb-lbl">1st Bag</span><span class="sb-val" style="color:var(--green);">Included ✓</span></div>
+          <div class="sb-row"><span class="sb-lbl">Meal</span><span class="sb-val">Braised Short Rib</span></div>
+          <div class="sb-row"><span class="sb-lbl">Extras</span><span class="sb-val">None added</span></div>
+
+          <div class="sb-total">
+            <span>Additional charges</span>
+            <span class="sb-total-amt" id="sb-total">$0.00</span>
+          </div>
+          <button class="sb-cta" onclick="completeCheckin()">Complete Check-In →</button>
+          <button class="sb-cta-sec">Download Boarding Pass</button>
+          <div class="sb-trust">
+            <div class="sb-trust-item">🔒 Secure · SSL encrypted</div>
+            <div class="sb-trust-item">📱 Boarding pass sent to app & email</div>
+            <div class="sb-trust-item">✦ MileagePlus® miles earned</div>
+            <div class="sb-trust-item">⏱ Check-in closes 60 min before departure</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact details card -->
+      <div class="sb-card">
+        <div class="sb-hdr">Contact & Notifications</div>
+        <div class="sb-body">
+          <div class="sb-row"><span class="sb-lbl">Email</span><span class="sb-val" style="font-size:12px;">j.smith@email.com</span></div>
+          <div class="sb-row"><span class="sb-lbl">Mobile</span><span class="sb-val">+1 (415) ***-4821</span></div>
+          <div class="sb-row"><span class="sb-lbl">Gate alerts</span><span class="sb-val" style="color:var(--green);">On ✓</span></div>
+          <div class="sb-row"><span class="sb-lbl">Delay alerts</span><span class="sb-val" style="color:var(--green);">On ✓</span></div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--gray-mid);">Notifications via United app, SMS, and email.</div>
+          <button style="margin-top:10px;width:100%;padding:9px;border:1.5px solid var(--ua-blue);border-radius:5px;color:var(--ua-blue);font-size:12.5px;font-weight:600;cursor:pointer;background:white;font-family:inherit;">Edit Contact Details</button>
+        </div>
+      </div>
+
+      <!-- Airport info -->
+      <div class="sb-card">
+        <div class="sb-hdr">SFO Airport Info</div>
+        <div class="sb-body">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:11px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--border-lt);">
+              <span style="font-size:18px;">🛫</span>
+              <div><div style="font-size:11px;color:var(--gray-lt);font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Terminal</div><div style="font-size:13.5px;font-weight:600;">Terminal I (International)</div></div>
+            </div>
+            <div style="display:flex;gap:11px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--border-lt);">
+              <span style="font-size:18px;">🚪</span>
+              <div><div style="font-size:11px;color:var(--gray-lt);font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Estimated Gate</div><div style="font-size:13.5px;font-weight:600;">A22 (subject to change)</div></div>
+            </div>
+            <div style="display:flex;gap:11px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--border-lt);">
+              <span style="font-size:18px;">⏰</span>
+              <div><div style="font-size:11px;color:var(--gray-lt);font-weight:700;text-transform:uppercase;letter-spacing:.4px;">Arrive at Airport By</div><div style="font-size:13.5px;font-weight:600;">8:45 AM (2h before)</div></div>
+            </div>
+            <div style="display:flex;gap:11px;align-items:flex-start;">
+              <span style="font-size:18px;">🔐</span>
+              <div><div style="font-size:11px;color:var(--gray-lt);font-weight:700;text-transform:uppercase;letter-spacing:.4px;">TSA Pre✓®</div><div style="font-size:13.5px;font-weight:600;">Enrolled · Lane available</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /RIGHT -->
+  </div>
+</div>
+
+<!-- UFLEX BOOKING MODAL -->
+<div class="overlay" id="ov-uflex" onclick="handleOv(event,'ov-uflex')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div>
+        <div class="mh-title">✈ UFlex: Behind the Wings</div>
+        <div class="mh-sub">Exclusive guided cockpit experience · MileagePlus® members only</div>
+      </div>
+      <button class="m-close" onclick="closeOverlay('ov-uflex')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="m-step">
+        <div class="m-step-title"><span class="m-badge">1</span> Your Flight</div>
+        <div class="m-flight-info">
+          <div>
+            <div class="mfi-route">SFO → LHR</div>
+            <div class="mfi-detail">UA901 · Mar 14, 2026 · Boeing 787-9 Dreamliner</div>
+            <div class="mfi-detail">PNR: A1MV7S · Experience just before pre-boarding</div>
+          </div>
+          <div>
+            <div class="mfi-lbl">Spots remaining</div>
+            <div class="mfi-window" style="color:var(--red);">Only 2 left!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-step">
+        <div class="m-step-title"><span class="m-badge">2</span> What's Included</div>
+        <div class="exp-opt picked" style="cursor:default;pointer-events:none;">
+          <div style="font-size:26px;flex-shrink:0">🛫</div>
+          <div style="flex:1">
+            <div class="eo-name" style="display:flex;align-items:center;gap:10px;">
+              UFlex Behind the Wings
+              <span style="font-size:10.5px;background:var(--ua-blue);color:white;border-radius:3px;padding:2px 9px;font-weight:700;letter-spacing:.5px">EXCLUSIVE</span>
+            </div>
+            <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Guided cockpit walkthrough</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Crew rest area access</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Full galley tour</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Exclusive United goodies</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Photo opportunity on deck</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);font-weight:500;"><span style="color:var(--ua-blue);font-size:15px">✓</span> Pilot Q&amp;A session</div>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(20,20,220,0.07);border:1px solid rgba(20,20,220,0.18);border-radius:6px;padding:5px 12px;"><span style="font-size:14px">⏱</span><span style="font-size:12.5px;font-weight:700;color:var(--ua-blue)">12–15 minutes</span></div>
+              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(20,20,220,0.07);border:1px solid rgba(20,20,220,0.18);border-radius:6px;padding:5px 12px;"><span style="font-size:14px">👥</span><span style="font-size:12.5px;font-weight:700;color:var(--ua-blue)">Max 4–6 guests</span></div>
+              <div style="display:inline-flex;align-items:center;gap:6px;background:var(--gold-bg);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:5px 12px;"><span style="font-size:12.5px;font-weight:700;color:var(--gold)">✦ MileagePlus® only</span></div>
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div class="eo-price">$35</div>
+            <div class="eo-miles">or 3,500 miles</div>
+            <div style="font-size:11px;color:var(--gray-mid);margin-top:4px">per person</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-step">
+        <div class="m-step-title"><span class="m-badge">3</span> Number of Guests</div>
+        <div class="guest-rows">
+          <div class="g-row">
+            <div><div class="g-lbl">Adults</div><div class="g-sub">Age 13+</div></div>
+            <div class="stepper">
+              <button class="st-btn" onclick="chg('adults',-1)">−</button>
+              <span class="st-val" id="cnt-adults">1</span>
+              <button class="st-btn" onclick="chg('adults',1)">+</button>
+            </div>
+          </div>
+          <div class="g-row">
+            <div><div class="g-lbl">Children</div><div class="g-sub">Age 2–12</div></div>
+            <div class="stepper">
+              <button class="st-btn" onclick="chg('children',-1)">−</button>
+              <span class="st-val" id="cnt-children">0</span>
+              <button class="st-btn" onclick="chg('children',1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;align-items:flex-start;gap:10px;background:linear-gradient(135deg,rgba(20,20,220,0.07),rgba(20,20,220,0.03));border:1.5px solid rgba(20,20,220,0.22);border-radius:8px;padding:12px 16px;">
+          <span style="font-size:18px;flex-shrink:0">👥</span>
+          <div>
+            <div style="font-size:13.5px;font-weight:700;color:var(--ua-blue);margin-bottom:2px;">Maximum 4–6 guests per experience</div>
+            <div style="font-size:12px;color:var(--gray-mid);line-height:1.55;">Small, exclusive group. Families on same PNR can book together. <strong style="color:var(--red)">Only 2 spots remaining</strong> on UA901 Mar 14.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-step">
+        <div class="m-step-title"><span class="m-badge">4</span> Experience Timing</div>
+        <div style="background:linear-gradient(135deg,rgba(20,20,220,0.06),rgba(20,20,220,0.03));border:1.5px solid rgba(20,20,220,0.2);border-radius:8px;padding:16px 18px;">
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div style="font-size:28px;flex-shrink:0;margin-top:2px">📋</div>
+            <div>
+              <div style="font-size:14.5px;font-weight:700;color:var(--ua-blue);margin-bottom:5px;">Tour details emailed after booking</div>
+              <div style="font-size:13px;color:var(--gray-mid);line-height:1.65;">The UFlex experience takes place <strong style="color:var(--ink)">during or just before pre-boarding at Gate A22</strong>. Full timing and instructions sent to your registered email within 24 hours of booking.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:8px;background:#F3F1EB;border-radius:7px;padding:10px 14px;">
+          <span style="font-size:16px">✉️</span>
+          <span style="font-size:12.5px;color:var(--gray-mid)">Confirmation sent to <strong style="color:var(--ink)">j.smith@email.com</strong></span>
+        </div>
+      </div>
+
+      <div class="m-summary">
+        <div style="font-size:12px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-mid)">Order Summary</div>
+        <div class="ms-row"><span class="ms-lbl">Experience</span><span class="ms-val">UFlex Behind the Wings</span></div>
+        <div class="ms-row"><span class="ms-lbl">Flight</span><span class="ms-val">UA901 · SFO→LHR · Mar 14</span></div>
+        <div class="ms-row"><span class="ms-lbl">Guests</span><span class="ms-val" id="sum-guests">1 Adult</span></div>
+        <div class="ms-row"><span class="ms-lbl">Price per person</span><span class="ms-val">$35.00</span></div>
+        <div class="ms-total"><span>Total</span><span class="ms-total-price" id="sum-total">$35.00</span></div>
+      </div>
+
+      <button class="m-cta" onclick="confirmBooking()">Confirm &amp; Pay →</button>
+      <button class="m-cta-sec" onclick="confirmBooking()">✦ Redeem MileagePlus® Miles (3,500 per person)</button>
+      <div class="m-trust">
+        <div class="m-trust-item">🔒 Secure checkout</div>
+        <div class="m-trust-item">↩ Free cancellation 24h+</div>
+        <div class="m-trust-item">✦ Earn bonus miles</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UFLEX CONFIRM MODAL -->
+<div class="overlay" id="ov-confirm" onclick="handleOv(event,'ov-confirm')">
+  <div class="conf-modal">
+    <button class="conf-x" onclick="closeOverlay('ov-confirm')">✕</button>
+    <div class="conf-check">✅</div>
+    <div class="conf-title">UFlex Booked!</div>
+    <div class="conf-sub">Your Behind the Wings experience on UA901 is confirmed. Full tour details will be emailed to j.smith@email.com within 24 hours. See you at Gate A22!</div>
+    <div class="conf-ref-box">
+      <div class="conf-ref-lbl">UFlex Booking Reference</div>
+      <div class="conf-ref-num">UF-2826</div>
+    </div>
+    <button class="conf-close-btn" onclick="closeOverlay('ov-confirm')">Done</button>
+  </div>
+</div>
+
+<!-- CHECK-IN COMPLETE MODAL -->
+<div class="overlay" id="ov-checkin-done" onclick="handleOv(event,'ov-checkin-done')">
+  <div class="conf-modal" style="max-width:500px;">
+    <button class="conf-x" onclick="closeOverlay('ov-checkin-done')">✕</button>
+    <div class="conf-check">🎉</div>
+    <div class="conf-title">Check-In Complete!</div>
+    <div class="conf-sub">You're all set for UA901 on March 14, 2026. Your mobile boarding pass has been sent to your United app and to j.smith@email.com.</div>
+    <div class="conf-ref-box" style="text-align:left;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <div><div class="conf-ref-lbl">PNR</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);letter-spacing:4px;">A1MV7S</div></div>
+        <div style="text-align:right;"><div class="conf-ref-lbl">Seat</div><div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ua-blue);">28A</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--gray-mid);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">Boarding Group 4 · Gate A22 (TBC) · Boards 10:15 AM</div>
+    </div>
+    <button class="conf-close-btn">Download Boarding Pass</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="fc-h4">Plan Travel</div>
+      <a href="#">Book flights</a>
+      <a href="#">UFlex Experiences</a>
+      <a href="#">Manage booking</a>
+      <a href="#">Hotels &amp; Cars</a>
+    </div>
+    <div>
+      <div class="fc-h4">MileagePlus®</div>
+      <a href="#">Earn miles</a>
+      <a href="#">Redeem miles</a>
+      <a href="#">Elite status</a>
+      <a href="#">Credit cards</a>
+    </div>
+    <div>
+      <div class="fc-h4">Travel Info</div>
+      <a href="#">Baggage policy</a>
+      <a href="#">Polaris lounges</a>
+      <a href="#">Aircraft &amp; seats</a>
+      <a href="#">UK Entry requirements</a>
+    </div>
+    <div>
+      <div class="fc-h4">Help</div>
+      <a href="#">Contact United</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Refunds</a>
+      <a href="#">TSA requirements</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 United Airlines, Inc. All rights reserved.</span>
+    <span>Privacy Policy &nbsp;·&nbsp; Terms &nbsp;·&nbsp; Cookie Settings</span>
+  </div>
+</footer>
+
+<script>
+/* Overlays */
+function openOverlay(id){var el=document.getElementById(id);if(el){el.classList.add('open');document.body.style.overflow='hidden';}}
+function closeOverlay(id){var el=document.getElementById(id);if(el){el.classList.remove('open');document.body.style.overflow='';}}
+function handleOv(e,id){if(e.target.id===id)closeOverlay(id);}
+
+/* Guests counter */
+var cnts={adults:1,children:0};
+function chg(type,d){
+  cnts[type]=Math.max(0,Math.min(6,cnts[type]+d));
+  if(type==='adults')cnts[type]=Math.max(1,cnts[type]);
+  if(cnts.adults+cnts.children>6){cnts[type]--;document.getElementById('cnt-'+type).textContent=cnts[type];return;}
+  document.getElementById('cnt-'+type).textContent=cnts[type];
+  var gs=cnts.adults+' Adult'+(cnts.adults>1?'s':'')+(cnts.children>0?' + '+cnts.children+' Child'+(cnts.children>1?'ren':''):'');
+  var sg=document.getElementById('sum-guests');if(sg)sg.textContent=gs;
+  var total=(cnts.adults+cnts.children)*35;
+  var st=document.getElementById('sum-total');if(st)st.textContent='$'+total.toFixed(2);
+}
+
+/* UFlex booking */
+function confirmBooking(){
+  closeOverlay('ov-uflex');
+  setTimeout(function(){openOverlay('ov-confirm');},200);
+}
+
+/* Complete check-in */
+function completeCheckin(){
+  openOverlay('ov-checkin-done');
+}
+
+/* Baggage selection */
+function selBag(el){
+  el.closest('.ci-section').querySelectorAll('.bag-option').forEach(function(b){b.classList.remove('selected');});
+  el.classList.add('selected');
+}
+
+/* Meal selection */
+function selMeal(el){
+  el.closest('.meal-grid').querySelectorAll('.meal-card').forEach(function(m){m.classList.remove('selected');});
+  el.classList.add('selected');
+}
+
+/* Upgrade toggle */
+function toggleUpgrade(btn){
+  var isAdded=btn.classList.contains('added');
+  if(isAdded){btn.classList.remove('added');btn.textContent='+ Add';}
+  else{btn.classList.add('added');btn.textContent='✓ Added';}
+}
+
+/* Seat map click feedback */
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.seat.avail,.seat.extra,.seat.exit').forEach(function(s){
+    s.addEventListener('click',function(){
+      var cur=document.querySelector('.seat.yours');
+      if(cur){cur.className='seat avail';cur.textContent='A';}
+      s.className='seat yours';
+    });
+  });
+});
+</script>
+</body>
+</html>
